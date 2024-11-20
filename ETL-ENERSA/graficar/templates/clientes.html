@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Consumo de Energía por Cliente</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <a class="navbar-brand" href="#">
+                <img src="https://api.pagos360.com/resource/D6C69D0F/logo/logo.png" alt="Logo" style="height: 40px;">
+            </a></a>
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="http://127.0.0.1:5000/">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="http://127.0.0.1:5000/clientes">Clientes</a>
+            </li>
+            
+          </ul>
+          
+        </div>
+      </nav>
+    <div class="container">
+        <h1 class="mt-5">Consumo de Energía - Análisis por Cliente</h1>
+        <form method="POST" class="mt-4">
+            <div class="form-group">
+                <label for="customer">Cliente:</label>
+                <select name="customer" class="form-control">
+                    <option value="">Seleccionar Cliente</option>
+                    {% for customer in customers %}
+                        <option value="{{ customer }}" {% if customer == selected_customer %}selected{% endif %}>{{ customer }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="scale">Escala de Tiempo:</label>
+                <select name="scale" class="form-control">
+                    <option value="day" {% if selected_scale == "day" %}selected{% endif %}>Día</option>
+                    <option value="month" {% if selected_scale == "month" %}selected{% endif %}>Mes</option>
+                    <option value="quarter" {% if selected_scale == "quarter" %}selected{% endif %}>Trimestre</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+        </form>
+
+        <div class="mt-5">
+            <h2>Gráfico de Consumo por Cliente</h2>
+            <img src="data:image/png;base64,{{ image_consumption }}" alt="Gráfico de Consumo" class="img-fluid">
+        </div>
+
+        <div class="mt-5">
+            <h2>Gráfico de Costo por Cliente</h2>
+            <img src="data:image/png;base64,{{ image_cost }}" alt="Gráfico de Costo" class="img-fluid">
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
